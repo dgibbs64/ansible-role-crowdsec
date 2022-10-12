@@ -1,11 +1,12 @@
 ---
 - name: Check if agent is already registered
-  ansible.builtin.shell: cscli machines list -o raw | grep {{ inventory_hostname }} | grep true || echo "Not found"
+  ansible.builtin.shell: set -o pipefail && cscli machines list -o raw | grep {{ inventory_hostname }} | grep true || echo "Not found"
   register: _csmachines
   delegate_to: "{{ crowdsec_delegate_server_hostname }}"
   changed_when: false
 
-- block:
+- name: Register new agent
+  block:
     - name: Register agent to server
       ansible.builtin.command: cscli lapi register -u {{ crowdsec_lapi_url }} --machine {{ inventory_hostname }}
       notify: restart crowdsec

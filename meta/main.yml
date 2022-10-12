@@ -1,19 +1,25 @@
 ---
-dependencies: []
 galaxy_info:
-  author: Jan Michalek
-  role_name: crowdsec
+  author: Daniel Gibbs
+  company: none
   description: Ansible role for deployng decentralised CrowdSec
-  company: m-cloud.cz
   license: MIT
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
+  namespace: dgibbs64
+  role_name: crowdsec
   platforms:
-    - name: Debian
-      versions:
-        - buster
-        - bullseye
     - name: Ubuntu
       versions:
-        - focal
-        - bionic
-        - jammy
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - "7"
+        - "8"
+
+dependencies: []

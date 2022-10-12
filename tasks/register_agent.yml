@@ -10,10 +10,12 @@
     - name: Register agent to server
       ansible.builtin.command: cscli lapi register -u {{ crowdsec_lapi_url }} --machine {{ inventory_hostname }}
       notify: restart crowdsec
+      changed_when: false
 
     - name: Validate agent on server
       ansible.builtin.command: cscli machines validate {{ inventory_hostname }}
       delegate_to: "{{ crowdsec_delegate_server_hostname }}"
+      changed_when: false
   when:
     - _csmachines.rc == 0
     - _csmachines.stdout is search("Not found")

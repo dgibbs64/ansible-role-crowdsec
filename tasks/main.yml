@@ -1,23 +1,40 @@
 ---
-- name: Install dependencies
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    autoclean: true
+    autoremove: true
+  when: ansible_os_family == "Debian"
+
+- name: Ensure crowdsec dependencies
+  ansible.builtin.package:
+    name:
+      - gnupg curl
+
+- name: Install dependencies (Debian Family)
   apt:
     name:
       - apt-transport-https
-      - gnupg
+  when: ansible_os_family == "Debian"
 
 - name: Add an apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://packagecloud.io/crowdsec/crowdsec/gpgkey
 
 - name: Add apt repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://packagecloud.io/crowdsec/crowdsec/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release|lower }} main
-    update_cache: true
+    state: present
+    filename: crowdsec_crowdsec
+  when: ansible_os_family == "Debian"
 
-- name: Install package
+- name: Install Crowdsec
   apt:
     name:
       - crowdsec
+  when: ansible_os_family == "Debian"
 
 - name: Deploy main config
   template:

@@ -1,10 +1,10 @@
 ---
 - name: Restart crowdsec
-  systemd:
+  ansible.builtin.systemd:
     name: crowdsec
     state: restarted
 
 - name: Restart crowdsec-firewall-bouncer
-  systemd:
+  ansible.builtin.systemd:
     name: crowdsec-firewall-bouncer
     state: restarted

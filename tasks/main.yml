@@ -31,13 +31,13 @@
   when: ansible_os_family == "Debian"
 
 - name: Install Crowdsec
-  apt:
+  ansible.builtin.apt:
     name:
       - crowdsec
   when: ansible_os_family == "Debian"
 
 - name: Deploy main config
-  template:
+  ansible.builtin.template:
     src: etc/crowdsec/config.yaml.j2
     dest: /etc/crowdsec/config.yaml
     owner: root
@@ -46,7 +46,7 @@
   notify: restart crowdsec
 
 - name: Deploy whitelist
-  template:
+  ansible.builtin.template:
     src: etc/crowdsec/parsers/s02-enrich/mywhitelist.yaml.j2
     dest: /etc/crowdsec/parsers/s02-enrich/mywhitelist.yaml
     owner: root

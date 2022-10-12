@@ -1,8 +1,18 @@
 ---
-skip_list:
-  - '106'
-  - '306'
-  - '503'
+#
+# Ansible managed
+#
 exclude_paths:
-  - molecule
-  - .drone.yml
+  - ./meta/preferences.yml
+  - ./molecule/default/prepare.yml
+  - ./molecule/default/converge.yml
+  - ./molecule/default/verify.yml
+  - ./molecule/default/collections.yml
+  - ./.tox
+  - ./.cache
+  - ./.github
+  - ./requirements.yml
+  - ./github
+
+skip_list:
+  - "403"

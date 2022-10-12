@@ -14,7 +14,7 @@
       - gnupg curl
 
 - name: Install dependencies (Debian Family)
-  apt:
+  ansible.builtin.apt:
     name:
       - apt-transport-https
   when: ansible_os_family == "Debian"
@@ -56,14 +56,14 @@
   notify: restart crowdsec
 
 - name: Flush handlers to apply config
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Register agent(s)
-  include_tasks: register_agent.yml
+  ansible.builtin.include_tasks: register_agent.yml
   when:
     - crowdsec_delegate_server_hostname != inventory_hostname
 
 - name: Register distributed bouncers(s)
-  include_tasks: add_bouncer.yml
+  ansible.builtin.include_tasks: add_bouncer.yml
   when:
     - crowdsec_bouncer.enabled
